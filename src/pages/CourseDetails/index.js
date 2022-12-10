@@ -24,7 +24,8 @@ function CourseDetails() {
                     <p className='text-xl text-gray-600 font-bold mt-4 mb-2'>Descrição do curso:</p>
                     <p className='text-justify text-gray-500'>
                         {course.description}
-                    </p></div>
+                    </p>
+                </div>
             </div>
         </div>
     )
