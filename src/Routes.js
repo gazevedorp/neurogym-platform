@@ -24,7 +24,7 @@ export default function RoutesNavigation() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                {user.id ?
+                {user.user.id ?
                     <>
                         {/*Remover rota de login*/}
                         <Route path="/login" element={<HomeStudent />} />

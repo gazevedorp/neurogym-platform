@@ -1,13 +1,31 @@
 import react, { useState, useEffect } from 'react';
+import { api } from '../../services/api';
 import useUserStore from '../../store/userStore';
 
 function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const { setUser } = useUserStore();
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setUser({ id: 1, name: "Gabriel" })
-        window.location.replace('/home-student');
+        try {
+            const response = await api.post("/login", {
+                email: email,
+                password: password
+            })
+            if (response) {
+                console.log(response.data);
+                setUser(response.data);
+                window.location.replace('/home-student');
+            }
+        }
+        catch (error) {
+            console.log(error);
+            if (error.response.status === 401) {
+                alert("Usuário ou senha inválidos");
+            }
+        }
     }
 
     return (
@@ -26,11 +44,33 @@ function Login() {
                         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                             <div>
                                 <label for="email" className="block mb-2 text-sm font-medium text-[#BD843E]">Email</label>
-                                <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" placeholder="name@email.com" required="" />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                                    placeholder="name@email.com"
+                                    required=""
+                                    value={email}
+                                    onChange={(event) => {
+                                        setEmail(event.target.value);
+                                    }}
+                                />
                             </div>
                             <div>
                                 <label for="password" className="block mb-2 text-sm font-medium text-[#BD843E]">Senha</label>
-                                <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" required="" />
+                                <input
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    placeholder="••••••••"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                                    required=""
+                                    value={password}
+                                    onChange={(event) => {
+                                        setPassword(event.target.value);
+                                    }}
+                                />
                             </div>
                             <a className='text-sm text-gray-500 hover:text-black font-semibold pt-4 underline' href='/register'>Ainda não tenho conta</a>
                             <button type="submit" className="w-full text-white bg-[#BD843E] hover:bg-[#ac7839] hover:bg-primary-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Entrar</button>

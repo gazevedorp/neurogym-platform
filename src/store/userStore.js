@@ -4,16 +4,16 @@ import { persist } from 'zustand/middleware';
 const useUserStore = create(
     persist(
         set => ({
-            user: [],
+            user: {},
             setUser: (newUser) => set(({
                 user: newUser
             })),
             removeUser: () => set(({
-                user: []
+                user: {}
             })),
         }),
         {
-            name: 'neurogym-user',
+            name: 'neurogym-student',
             getStorage: () => sessionStorage,
         }
     )

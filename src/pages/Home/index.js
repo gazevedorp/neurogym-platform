@@ -22,7 +22,7 @@ function Home() {
                             </a>
                         ))}
                     </div>
-                    {user.id ?
+                    {user.user.id ?
                         <div>
                             <a href="/home-student" className="p-2 font-semibold mr-4 rounded bg-[#BD843E] text-white px-4">
                                 Meus cursos
